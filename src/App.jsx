@@ -10,7 +10,7 @@ export default function App() {
     window.addEventListener('pointermove', moveGlow, { passive: true });
     return () => window.removeEventListener('pointermove', moveGlow);
   }, []);
-
+//test
   return (
     <div className="page-shell">
       <div className="cursor-glow" aria-hidden="true" />
