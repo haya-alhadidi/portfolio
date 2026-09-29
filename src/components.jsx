@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { focusAreas, process, profile, services, stack } from './content';
+import { focusAreas, process, profile, services, stack, stackDetails } from './content';
 
 const Arrow = ({ diagonal = false }) => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -7,7 +7,7 @@ const Arrow = ({ diagonal = false }) => (
   </svg>
 );
 
-export function Header() {
+export function Header({ theme, onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -17,25 +17,43 @@ export function Header() {
   }, []);
 
   return (
-    <header className="site-header">
+    <header className={menuOpen ? 'site-header menu-open' : 'site-header'}>
       <a className="brand" href="#top" aria-label="Haya Alhadidi home">
         <span className="brand-mark">{profile.shortName}</span>
         <span>{profile.name}</span>
       </a>
-      <button
-        className="menu-button"
-        type="button"
-        aria-expanded={menuOpen}
-        aria-controls="site-navigation"
-        onClick={() => setMenuOpen((value) => !value)}
-      >
-        <span />
-        <span />
-      </button>
+      <div className="header-controls">
+        <button
+          className="theme-toggle mobile-theme-toggle"
+          type="button"
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          onClick={onToggleTheme}
+        >
+          <span className="theme-toggle__icon">{theme === 'dark' ? '☀' : '☾'}</span>
+        </button>
+        <button
+          className="menu-button"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          <span />
+          <span />
+        </button>
+      </div>
       <nav id="site-navigation" className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
         <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
         <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
         <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+        <button
+          className="theme-toggle nav-theme-toggle"
+          type="button"
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          onClick={onToggleTheme}
+        >
+          <span className="theme-toggle__icon">{theme === 'dark' ? '☀' : '☾'}</span>
+        </button>
         <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)}>
           Start a project <Arrow diagonal />
         </a>
@@ -68,6 +86,7 @@ export function Hero() {
         <div className="data-node node-a">DATA</div>
         <div className="data-node node-b">MODEL</div>
         <div className="data-node node-c">OUTPUT</div>
+        <div className="data-node node-d">TRAIN</div>
       </div>
       <div className="hero-footer">
         <span>{profile.location}</span>
@@ -147,10 +166,28 @@ export function Process() {
 }
 
 export function Stack() {
+  const track = [...stack, ...stack];
+
   return (
     <section className="section stack-section">
-      <p className="eyebrow">Tools & technologies</p>
-      <div className="stack-cloud">{stack.map((item) => <span key={item}>{item}</span>)}</div>
+      <div className="stack-intro">
+        <p className="eyebrow">Tools & technologies</p>
+      </div>
+      <div className="stack-slider" aria-label="Tools and technologies I use">
+        <div className="stack-window">
+          <div className="stack-track">
+            {track.map((item, index) => {
+              const [shortName] = stackDetails[item];
+              return (
+                <span className="stack-tool" key={`${item}-${index}`} tabIndex={index < stack.length ? 0 : -1}>
+                  <strong>{shortName}</strong>
+                  <span><b>{item}</b></span>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

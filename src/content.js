@@ -66,3 +66,18 @@ export const stack = [
   'MLflow',
   'Cloud AI',
 ];
+
+export const stackDetails = {
+  Python: ['PY', 'Modeling, data work, and automation'],
+  PyTorch: ['PT', 'Deep learning and experimentation'],
+  Transformers: ['TF', 'LLMs and language pipelines'],
+  'Scikit-learn': ['SK', 'Classical machine learning'],
+  LangChain: ['LC', 'LLM orchestration and RAG'],
+  n8n: ['N8N', 'Connected workflow automation'],
+  'Workflow Automation': ['WF', 'Reliable system handoffs'],
+  'Vector Databases': ['VDB', 'Semantic search and retrieval'],
+  FastAPI: ['API', 'Production model endpoints'],
+  Docker: ['DK', 'Portable development environments'],
+  MLflow: ['MLF', 'Experiment tracking and delivery'],
+  'Cloud AI': ['AI', 'Scalable intelligent services'],
+};
